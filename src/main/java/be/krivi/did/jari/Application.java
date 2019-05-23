@@ -1,13 +1,12 @@
-package be.krivi.did.prot;
+package be.krivi.did.jari;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProtApplication {
+public class Application{
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProtApplication.class, args);
+		SpringApplication.run( Application.class, args);
 	}
-
 }

@@ -1,4 +1,4 @@
-package be.krivi.did.prot.core.model;
+package be.krivi.did.jari.core.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Setter;

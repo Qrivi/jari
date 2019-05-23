@@ -1,9 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'io.freefair.lombok' version '3.6.4'
 }
 
+apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'io.freefair.lombok'
 
 group = 'be.krivi.did'
 version = '0.0.1-SNAPSHOT'
@@ -15,7 +18,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'javax.validation:validation-api'
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'com.h2database:h2'
