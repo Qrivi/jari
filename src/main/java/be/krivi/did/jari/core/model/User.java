@@ -17,13 +17,13 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table( name = "user")
+@Table( name = "user" )
 public class User implements Serializable{
 
     @Id
     @GeneratedValue( generator = "pk_generator", strategy = GenerationType.TABLE )
     @TableGenerator( name = "pk_generator", allocationSize = 1 )
-    @Column(name = "id")
+    @Column( name = "id" )
     private Long id;
 
     @NotBlank( message = "{NotBlank.User.name}" )
