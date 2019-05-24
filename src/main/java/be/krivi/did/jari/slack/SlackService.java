@@ -57,13 +57,13 @@ public class SlackService{
         String writeScope = String.join( ",", WRITE_SCOPE );
         String userScope = System.getenv( "SLACK_READ_SCOPE" );
 
-        if( userScope != null ){
+        if( userScope != null )
             readScope = Arrays.stream( userScope.split( "," ) )
                     .map( s -> s.toLowerCase().trim() )
                     .filter( s -> s.equals( "channels" ) || s.equals( "groups" ) || s.equals( "im" ) || s.equals( "mpim" ) )
                     .map( s -> s + ":history" )
                     .collect( Collectors.joining( "," ) );
-        }
+
         return readScope + "," + writeScope;
     }
 }
