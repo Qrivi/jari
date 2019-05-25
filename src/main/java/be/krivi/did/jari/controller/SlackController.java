@@ -1,7 +1,7 @@
 package be.krivi.did.jari.controller;
 
 import be.krivi.did.jari.response.Response;
-import be.krivi.did.jari.slack.SlackService;
+import be.krivi.did.jari.service.SlackService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(
         path = "/slack",
+        consumes = MediaType.ALL_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE )
 public class SlackController{
 
@@ -25,19 +26,33 @@ public class SlackController{
         this.slackService = slackService;
     }
 
-    @RequestMapping( path = "/auth", method = RequestMethod.GET )
-    public RedirectView auth( HttpServletRequest request ){
+    @RequestMapping( method = RequestMethod.GET )
+    public ResponseEntity<Response> verify(){
+        if( slackService.verifyEnvironment() )
+            return new ResponseEntity<>( Response.good( "Slack API client ID and secret are set." ), HttpStatus.OK );
+        return new ResponseEntity<>( Response.bad( "Slack API client ID and/or secret missing or malformatted." ), HttpStatus.INTERNAL_SERVER_ERROR );
+    }
+
+    @RequestMapping( path = "/authorize", method = RequestMethod.GET )
+    public RedirectView auth( HttpServletRequest request,
+                              @RequestParam( value = "state", defaultValue = "" ) String userId){
         RedirectView redirect = new RedirectView();
-        String url = request.getRequestURL().toString().replace( "/auth", "/verify" );
-        redirect.setUrl( slackService.getAuthorizeUrl( url ) );
+        String authUrl = request.getRequestURL().toString().replace( "/authorize", "/authenticate" );
+        redirect.setUrl( slackService.getAuthorizeUrl( authUrl, userId ) );
         return redirect;
     }
 
-    @RequestMapping( path = "/verify", method = RequestMethod.GET )
-    public ResponseEntity<Response> verify( HttpServletRequest request, @RequestParam( "code" ) String code, @RequestParam( "state" ) String state ){
-        if( code == null )
-            return new ResponseEntity<>( Response.makeErrorRespone( "Request does not contain a code to verify." ), HttpStatus.BAD_REQUEST );
-        if( !slackService.verifyState( state ) )
-            return new ResponseEntity<>( Response.makeErrorRespone( "Request does not contain a valid state." ), HttpStatus.FORBIDDEN );
+    @RequestMapping( path = "/authenticate", method = RequestMethod.GET )
+    public ResponseEntity<Response> verify( HttpServletRequest request,
+                                            @RequestParam( value = "code", defaultValue = "" ) String code,
+                                            @RequestParam( value = "state", defaultValue = "" ) String userId,
+                                            @RequestParam( value = "error", defaultValue = "" ) String error ){
+        if( !error.isBlank() )
+            return new ResponseEntity<>( Response.bad( "You did not grant me access. 😢" ), HttpStatus.UNAUTHORIZED );
+        if( code.isBlank() )
+            return new ResponseEntity<>( Response.bad( "Request does not contain a code to verify." ), HttpStatus.BAD_REQUEST );
 
+        String team = slackService.authenticate( request.getRequestURL().toString(), userId, code );
+        return new ResponseEntity<>( Response.good( "Thanks for granting me some permissions in \"" + team + "\"!" ), HttpStatus.OK );
     }
+}
