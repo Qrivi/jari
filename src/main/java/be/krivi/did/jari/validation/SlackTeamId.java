@@ -7,12 +7,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target( {ElementType.FIELD} )
+@Target( { ElementType.FIELD } )
 @Retention( RetentionPolicy.RUNTIME )
-@Constraint( validatedBy = {SlackTeamIdValidator.class} )
+@Constraint( validatedBy = { SlackTeamIdValidator.class } )
 public @interface SlackTeamId{
 
+    boolean allowNull() default false;
+
     String message() default "{be.krivi.did.jari.validation.SlackTeamId.message}";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

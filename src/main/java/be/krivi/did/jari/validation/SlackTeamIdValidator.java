@@ -3,10 +3,19 @@ package be.krivi.did.jari.validation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class SlackTeamIdValidator implements ConstraintValidator<SlackTeamId, String>{
+public class SlackTeamIdValidator implements ConstraintValidator<SlackTeamId,String>{
+
+    private boolean allowNull;
+
+    @Override
+    public void initialize( SlackTeamId constraint ){
+        this.allowNull = constraint.allowNull();
+    }
 
     @Override
     public boolean isValid( String value, ConstraintValidatorContext context ){
-        return value !=null && value.matches( "^T[A-Z0-9]{8}$" );
+        if( value == null )
+            return this.allowNull;
+        return value.matches( "^T[A-Z0-9]{8}$" );
     }
 }

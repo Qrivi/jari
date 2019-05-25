@@ -1,36 +1,27 @@
 package be.krivi.did.jari.model.core;
 
+import be.krivi.did.jari.model.Identifiable;
 import be.krivi.did.jari.validation.SlackBotToken;
 import be.krivi.did.jari.validation.SlackTeamId;
-import lombok.Builder;
-import lombok.Data;
+import be.krivi.did.jari.validation.SlackUserId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 
-@Data
-@Builder
 @Entity
-@Table( name = "bot" )
-public class Bot{
+@Table( name = "jari_bot" )
+public class Bot extends Identifiable{
 
-    @Id
-    @SlackTeamId( message = "{SlackTeamId.Bot.id}" )
-    @Column( name = "id" )
-    private String id; // one bot per team, so team ID is fit to serve as PK
+    @SlackUserId( message = "{SlackUserId.Bot.handle}" )
+    @Column( name = "slack_id" )
+    private String handle;
 
-    @SlackBotToken( message = "{SlackBotId.Bot.token}", optional = false )
-    @Column( name = "token" )
+    @SlackTeamId( message = "{SlackTeamId.Bot.team}" )
+    @Column( name = "team_id" )
+    private String team;
+
+    @SlackBotToken( message = "{SlackBotToken.Bot.token}")
+    @Column( name = "token", nullable = false )
     private String token;
-
-    @NotNull( message = "{NotNull.Bot.lastEdit}" )
-    @Column( name = "last_edit" )
-    @Temporal( TemporalType.TIMESTAMP )
-    private Date lastEdit;
 }

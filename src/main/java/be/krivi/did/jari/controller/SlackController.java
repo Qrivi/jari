@@ -35,7 +35,7 @@ public class SlackController{
 
     @RequestMapping( path = "/authorize", method = RequestMethod.GET )
     public RedirectView auth( HttpServletRequest request,
-                              @RequestParam( value = "state", defaultValue = "" ) String userId){
+                              @RequestParam( value = "user", defaultValue = "" ) String userId ){
         RedirectView redirect = new RedirectView();
         String authUrl = request.getRequestURL().toString().replace( "/authorize", "/authenticate" );
         redirect.setUrl( slackService.getAuthorizeUrl( authUrl, userId ) );

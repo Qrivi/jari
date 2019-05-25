@@ -1,36 +1,32 @@
 package be.krivi.did.jari.model.core;
 
+import be.krivi.did.jari.model.Identifiable;
+import be.krivi.did.jari.validation.SlackTeamId;
 import be.krivi.did.jari.validation.SlackUserId;
 import be.krivi.did.jari.validation.SlackUserToken;
-import lombok.Builder;
-import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
-@Data
-@Builder
 @Entity
-@Table( name = "user" )
-public class User{
+@Table( name = "jari_user" )
+public class User extends Identifiable{
 
-    @Id
-    @SlackUserId( message = "{SlackUserId.User.id}" )
-    @Column( name = "id" )
-    private String id;
+    @SlackUserId( message = "{SlackUserId.User.handle}", allowNull = true )
+    @Column( name = "slack_id" )
+    private String handle;
 
-    @SlackUserToken( message = "{SlackUserToken.User.token}", optional = true )
-    @Column( name = "token" )
+    @SlackTeamId( message = "{SlackTeamId.User.team}" )
+    @Column( name = "team_id" )
+    private String team;
+
+    @SlackUserToken( message = "{SlackUserToken.User.token}" )
+    @Column( name = "token", nullable = false )
     private String token;
 
-    @NotNull( message = "{NotNull.User.lastEdit}" )
-    @Column( name = "last_edit" )
-    @Temporal( TemporalType.TIMESTAMP )
-    private Date lastEdit;
+    @NotNull( message = "{NotNull.User.scope}" )
+    @Column( name = "scope", nullable = false )
+    private String scope;
 }

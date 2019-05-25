@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class BotService{
 
     private BotRepository repository;
-    
-    public BotService( BotRepository repository){
+
+    public BotService( BotRepository repository ){
         this.repository = repository;
     }
 }

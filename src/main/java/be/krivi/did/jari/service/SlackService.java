@@ -39,7 +39,7 @@ public class SlackService{
     private UserService userService;
     private BotService botService;
 
-    public SlackService(UserService userService, BotService botService){
+    public SlackService( UserService userService, BotService botService ){
         this.client = ClientBuilder.newClient();
         this.clientId = System.getenv( "SLACK_CLIENT_ID" );
         this.clientSecret = System.getenv( "SLACK_CLIENT_SECRET" );
@@ -55,7 +55,7 @@ public class SlackService{
     }
 
     public String getAuthorizeUrl( String authUrl, String userId ){
-        if( userId !=null && userId.matches( "^xoxp-[0-9]{11}-[0-9]{11}-[0-9]{12}-\\w{32}$" ))
+        if( userId != null && userId.matches( "^xoxp-[0-9]{11}-[0-9]{11}-[0-9]{12}-\\w{32}$" ) )
             return URL_AUTHORIZE + "?client_id=" + this.clientId
                     + "&scope=" + this.scope
                     + "&redirect_uri=" + authUrl
@@ -78,6 +78,7 @@ public class SlackService{
 
         if( !response.isOk() )
             throw new SlackException( response.getError() );
+
 
         // TODO add to db
         // Bot en User refactoren om van zelfde rommel af te stammen voor ID en date
