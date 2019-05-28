@@ -28,6 +28,10 @@ public class BotService{
         return repository.findByHandle( handle );
     }
 
+    public Optional<Bot> getBotOfTeam( String team ){
+        return repository.findByTeam( team );
+    }
+
     public Bot addBot( String handle, String team, String token ){
         if( repository.findByHandleAndTeam( handle, team ).isPresent() )
             throw new DuplicateBotException( "Bot already exists" );

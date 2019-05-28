@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,10 @@ public class UserService{
 
     public Optional<User> getUser( String handle ){
         return repository.findByHandle( handle );
+    }
+
+    public List<User> getUsersOfTeam( String team ){
+        return repository.findAllByTeam( team );
     }
 
     public User addUser( String handle, String team, String token, String scope ){
