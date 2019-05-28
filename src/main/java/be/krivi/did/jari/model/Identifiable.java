@@ -1,6 +1,7 @@
 package be.krivi.did.jari.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Getter
+@Setter
 @MappedSuperclass
 public class Identifiable{
 
@@ -29,9 +31,11 @@ public class Identifiable{
     @Temporal( TemporalType.TIMESTAMP )
     private Date lastEdit;
 
+    private IdentifiableAction action;
+
     @Override
     public boolean equals( Object obj ){
-        return !( obj == null || id == null ) && obj instanceof Identifiable && ( (Identifiable)obj ).getId() != null && ( (Identifiable)obj ).getId().equals( this.id );
+        return !( obj == null || id == null ) && obj instanceof Identifiable && ( (Identifiable) obj ).getId() != null && ( (Identifiable) obj ).getId().equals( this.id );
     }
 
     @Override

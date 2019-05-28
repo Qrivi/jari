@@ -8,7 +8,7 @@ import lombok.Getter;
 public class Response{
 
     private boolean ok;
-    private Object data;
+    private ResponseData data;
     private String message;
     private String error;
 
@@ -16,7 +16,7 @@ public class Response{
         // nop
     }
 
-    public static Response good( Object data ){
+    public static Response good( ResponseData data ){
         Response response = new Response();
         response.setOk( true );
         response.setData( data );
@@ -37,7 +37,7 @@ public class Response{
         return response;
     }
 
-    private void setData( Object data ){
+    private void setData( ResponseData data ){
         this.data = data;
     }
 

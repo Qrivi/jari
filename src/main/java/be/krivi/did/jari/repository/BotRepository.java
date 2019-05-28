@@ -4,10 +4,14 @@ import be.krivi.did.jari.model.core.Bot;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface BotRepository extends CrudRepository<Bot,Integer>{
 
-    // Bot findByHandle( String handle );
+    Optional<Bot> findByHandle( String handle );
 
-    // Bot findByTeam( String team );
+    Optional<Bot> findByTeam( String team );
+
+    Optional<Bot> findByHandleAndTeam( String handle, String team );
 }
