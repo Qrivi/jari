@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public class UserData extends ResponseData{
+public class UserData implements ResponseData{
 
     private String bot;
     private List<User> users;

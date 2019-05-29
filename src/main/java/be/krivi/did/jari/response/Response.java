@@ -18,38 +18,22 @@ public class Response{
 
     public static Response good( ResponseData data ){
         Response response = new Response();
-        response.setOk( true );
-        response.setData( data );
+        response.ok = true;
+        response.data = data;
         return response;
     }
 
     public static Response good( String message ){
         Response response = new Response();
-        response.setOk( true );
-        response.setMessage( message );
+        response.ok = true;
+        response.message = message;
         return response;
     }
 
     public static Response bad( String message ){
         Response response = new Response();
-        response.setOk( false );
-        response.setError( message );
+        response.ok = false;
+        response.error = message;
         return response;
-    }
-
-    private void setData( ResponseData data ){
-        this.data = data;
-    }
-
-    private void setOk( boolean ok ){
-        this.ok = ok;
-    }
-
-    private void setMessage( String message ){
-        this.message = message;
-    }
-
-    private void setError( String error ){
-        this.error = error;
     }
 }
