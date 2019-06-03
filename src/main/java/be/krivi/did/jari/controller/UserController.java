@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.ws.rs.Produces;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(
-        path = "/users",
-        consumes = MediaType.APPLICATION_JSON_VALUE,
-        produces = MediaType.APPLICATION_JSON_VALUE )
+@RequestMapping( path = "/users" )
+@Produces( MediaType.APPLICATION_JSON_VALUE )
 public class UserController{
 
     private UserService userService;

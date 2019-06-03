@@ -1,10 +1,10 @@
 package be.krivi.did.jari.response;
 
 import lombok.Builder;
-
-import java.util.List;
+import lombok.Getter;
 
 @Builder
+@Getter
 public class UserData{
 
     private String user;

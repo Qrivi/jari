@@ -94,13 +94,13 @@ public class SlackService{
             user = userService.addUser( userId, response.getTeamId(), response.getAccessToken(), response.getScope() );
 
         if( existingBot.isPresent() )
-            bot = botService.updateBot( existingBot.get().getId(), response.getBot().getUserId(), response.getTeamId(), response.getAccessToken() );
+            bot = botService.updateBot( existingBot.get().getId(), response.getBot().getUserId(), response.getTeamId(), response.getBot().getAccessToken() );
         else
-            bot = botService.addBot( response.getBot().getUserId(), response.getTeamId(), response.getAccessToken() );
+            bot = botService.addBot( response.getBot().getUserId(), response.getTeamId(), response.getBot().getAccessToken() );
 
         return AuthData.builder()
-                .message( "Successfully authenticated in " + response.getTeamName() )
-                .scope( response.getAccessToken() )
+                .message( "Successfully authenticated in team " + response.getTeamName() + " (" + response.getTeamId() + ")!" )
+                .scope( response.getScope() )
                 .user( user.getAction().toString() )
                 .bot( bot.getAction().toString() )
                 .build();

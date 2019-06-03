@@ -14,7 +14,7 @@ public class SlackUserIdValidator implements ConstraintValidator<SlackUserId,Str
 
     @Override
     public boolean isValid( String value, ConstraintValidatorContext context ){
-        if( value == null )
+        if( value == null || value.equals( "" ) )
             return this.allowNull;
         return value.matches( "^U[A-Z0-9]{8}$" );
     }
