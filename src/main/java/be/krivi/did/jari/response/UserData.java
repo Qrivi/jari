@@ -5,14 +5,8 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public class UserData implements ResponseData{
+public class UserData{
 
-    private String bot;
-    private List<User> users;
-
-    @Builder
-    public class User{
-        private String user;
-        private String scope;
-    }
+    private String user;
+    private String scope;
 }

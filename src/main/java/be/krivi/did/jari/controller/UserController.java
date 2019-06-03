@@ -2,6 +2,7 @@ package be.krivi.did.jari.controller;
 
 import be.krivi.did.jari.model.core.Bot;
 import be.krivi.did.jari.response.Response;
+import be.krivi.did.jari.response.TeamData;
 import be.krivi.did.jari.response.UserData;
 import be.krivi.did.jari.service.BotService;
 import be.krivi.did.jari.service.UserService;
@@ -37,11 +38,11 @@ public class UserController{
         Optional<Bot> botOfTeam = botService.getBotOfTeam( team );
 
         if( botOfTeam.isPresent() ){
-            UserData data = UserData.builder()
+            TeamData data = TeamData.builder()
                     .bot( botOfTeam.get()
                             .getHandle() )
                     .users( userService.getUsersOfTeam( team ).stream()
-                            .map( u -> UserData.User.builder()
+                            .map( u -> UserData.builder()
                                     .user( u.getHandle() )
                                     .scope( u.getScope() )
                                     .build() )
@@ -50,6 +51,6 @@ public class UserController{
 
             return new ResponseEntity<>( Response.good( data ), HttpStatus.OK );
         }
-        return new ResponseEntity<>( Response.bad( "Never heard of that team. I'm sorry, pal." ), HttpStatus.NOT_FOUND );
+        return new ResponseEntity<>( Response.bad( "Unknown team." ), HttpStatus.NOT_FOUND );
     }
 }
